@@ -3,37 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discover Good People of Bangladesh</title>
+    <title>মনোনয়ন দিন - Discover Good People of Bangladesh</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
         body { background: #f4f7f6; padding: 15px; }
-        .header { text-align: center; margin-bottom: 20px; padding: 15px; background: #006a4e; color: white; border-radius: 8px; }
-        .container { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 4px solid #f42a41; }
-        h2 { margin-bottom: 10px; color: #006a4e; font-size: 1.2rem; }
-        iframe { width: 100%; height: 750px; border: none; border-radius: 6px; }
-        @media (min-width: 768px) {
-            .container { flex-direction: row; }
-            .card { flex: 1; }
+        .header { text-align: center; margin-bottom: 20px; padding: 15px; background: #006a4e; color: white; border-radius: 8px; position: relative; }
+        .btn-back { position: absolute; left: 15px; top: 18px; background: #ffffff; color: #006a4e; padding: 8px 14px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.9rem; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 4px solid #f42a41; }
+        iframe { width: 100%; height: 800px; border: none; border-radius: 6px; }
+        @media (max-width: 600px) {
+            .btn-back { position: static; display: inline-block; margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>বাংলাদেশের ভালো মানুষ খুঁজুন</h1>
-        <p>ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই</p>
+        <a href="index.html" class="btn-back">⬅ মূল পেজে ফিরুন</a>
+        <h1>মনোনয়ন দিন</h1>
+        <p>ভালো মানুষের তথ্য লিখে নিচে জমা দিন</p>
     </div>
     <div class="container">
-        <!-- ১. গুগল ফর্ম (বামপাশে) -->
         <div class="card">
-            <h2>মনোনয়ন দিন (Nominate Someone)</h2>
             <iframe src="https://docs.google.com/forms/d/e/1A7aL38fnSHp9N6PXIMzCe2MANfNGG86W1IduBBbTqj4/viewform?embedded=true"></iframe>
-        </div>
-
-        <!-- ২. ড্যাশবোর্ড (ডানপাশে) -->
-        <div class="card">
-            <h2>যাচাইকৃত ডাটা ও রেজাল্ট (Verified Good Work)</h2>
-            <iframe src="https://weathered-leaf-479c.hossain-monir3474.workers.dev/"></iframe>
         </div>
     </div>
 </body>
+</html>
