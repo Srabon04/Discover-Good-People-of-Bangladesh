@@ -29,4 +29,30 @@
         </div>
     </div>
 </body>
+    <script>
+  // আপনার Apps Script URL টি এখানে দিন
+  const scriptURL = 'আপনার_কপি_করা_WEB_APP_URL';
+
+  // সাবমিট বাটন ক্লিক বা ফর্ম হ্যান্ডলার
+  document.addEventListener('DOMContentLoaded', () => {
+    const submitBtn = document.querySelector('button[type="submit"]') || document.querySelector('button');
+    
+    if (submitBtn) {
+      submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // ইনপুট বক্স থেকে ডাটা নেওয়া
+        const formData = new FormData();
+        formData.append('name', document.querySelector('input[placeholder*="নাম"]')?.value || '');
+        formData.append('district', document.querySelector('input[placeholder*="জেলা"]')?.value || '');
+        formData.append('category', document.querySelector('select')…value || '');
+        formData.append('description', document.querySelector('textarea')?.value || '');
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+          .then(response => alert('সফলভাবে জমা হয়েছে!'))
+          .catch(error => alert('ত্রুটি হয়েছে, আবার চেষ্টা করুন।'));
+      });
+    }
+  });
+</script>
 </html>
