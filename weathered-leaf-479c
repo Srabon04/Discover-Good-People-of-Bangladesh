@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মনিটরিং ড্যাশবোর্ড</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        .card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; }
+    </style>
+</head>
+<body>
+
+    <h2>লাইভ মনিটরিং ডাটা</h2>
+    <div id="data-container">ডাটা লোড হচ্ছে...</div>
+
+    <script>
+      // গুগল শিট থেকে পাবলিশ করা CSV লিংক এখানে বসান
+      const sheetCSVUrl = 'আপনার_PUBLISHED_CSV_URL_এখানে_দিন';
+
+      fetch(sheetCSVUrl)
+        .then(response => response.text())
+        .then(data => {
+          const rows = data.split('\n').slice(1);
+          let html = '';
+          rows.forEach(row => {
+            const columns = row.split(',');
+            if(columns[1]) {
+              html += `<div class="card">
+                <h3>${columns[1]}</h3>
+                <p><strong>জেলা:</strong> ${columns[2] || 'N/A'}</p>
+                <p><strong>বিবরণ:</strong> ${columns[3] || 'N/A'}</p>
+              </div>`;
+            }
+          });
+          document.getElementById('data-container').innerHTML = html || '<p>কোনো ডাটা পাওয়া যায়নি।</p>';
+        })
+        .catch(err => {
+          document.getElementById('data-container').innerHTML = '<p>ডাটা লোড করতে সমস্যা হয়েছে।</p>';
+        });
+    </script>
+
+</body>
+</html>
