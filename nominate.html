@@ -1,60 +1,6 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মনোনয়ন দিন - Discover Good People of Bangladesh</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
-        body { background: #f4f7f6; padding: 15px; }
-        .header { text-align: center; margin-bottom: 20px; padding: 15px; background: #006a4e; color: white; border-radius: 8px; position: relative; }
-        .btn-back { position: absolute; left: 15px; top: 18px; background: #ffffff; color: #006a4e; padding: 8px 14px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 0.9rem; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .card { background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 4px solid #f42a41; }
-        <iframe src={ <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/2b7758cd-cf22-4065-88bb-7c232be46412/page/page_12345" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe> }
-        @media (max-width: 600px) {
-            .btn-back { position: static; display: inline-block; margin-bottom: 10px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <a href="index.html" class="btn-back">⬅ মূল পেজে ফিরুন</a>
-        <h1>মনোনয়ন দিন</h1>
-        <p>ভালো মানুষের তথ্য লিখে নিচে জমা দিন</p>
-    </div>
-    <div class="container">
-        <div class="card">
-            <iframe src="https://docs.google.com/forms/d/e/1A7aL38fnSHp9N6PXIMzCe2MANfNGG86W1IduBBbTqj4/viewform?embedded=true"></iframe>
-        </div>
-    </div>
-</body>
-    <script>
-  // আপনার Apps Script URL টি এখানে দিন
-  const scriptURL = '
-https://script.google.com/macros/s/AKfycbwLHJkpJKlQA3q3nGKRrnXg7sfOptGLUUo_UyvC3JlqdXxTyh-N4z4pxeBai7ulnHIc
-';
-
-  // সাবমিট বাটন ক্লিক বা ফর্ম হ্যান্ডলার
-  document.addEventListener('DOMContentLoaded', () => {
-    const submitBtn = document.querySelector('button[type="submit"]') || document.querySelector('button');
-    
-    if (submitBtn) {
-      submitBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // ইনপুট বক্স থেকে ডাটা নেওয়া
-        const formData = new FormData();
-        formData.append('name', document.querySelector('input[placeholder*="নাম"]')?.value || '');
-        formData.append('district', document.querySelector('input[placeholder*="জেলা"]')?.value || '');
-        formData.append('category', document.querySelector('select')…value || '');
-        formData.append('description', document.querySelector('textarea')?.value || '');
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-          .then(response => alert('সফলভাবে জমা হয়েছে!'))
-          .catch(error => alert('ত্রুটি হয়েছে, আবার চেষ্টা করুন।'));
-      });
-    }
-  });
-</script>
+<html>
+<style>
+   div{min-height:1em;}
+</style>
+<body>&lt;script&gt;<br/>document.getElementById(&#39;nominationForm&#39;).addEventListener(&#39;submit&#39;, async function(e) {<br/>    e.preventDefault();<br/><br/>    const formData = {<br/>        nominee_type: document.getElementById(&#39;nominee_type&#39;)?.value || &#39;&#39;,<br/>        name: document.getElementById(&#39;name&#39;)?.value || &#39;&#39;,<br/>        district: document.getElementById(&#39;district&#39;)?.value || &#39;&#39;,<br/>        category: document.getElementById(&#39;category&#39;)?.value || &#39;&#39;,<br/>        reason: document.getElementById(&#39;reason&#39;)?.value || &#39;&#39;,<br/>        story: document.getElementById(&#39;story&#39;)?.value || &#39;&#39;,<br/>        proof: document.getElementById(&#39;proof&#39;)?.value || &#39;&#39;<br/>    };<br/><br/>    try {<br/>        const response = await fetch(&#39;/api/submit&#39;, {<br/>            method: &#39;POST&#39;,<br/>            headers: { &#39;Content-Type&#39;: &#39;application/json&#39; },<br/>            body: JSON.stringify(formData)<br/>        });<br/><br/>        const result = await response.json();<br/><br/>        if (response.ok &amp;&amp; result.success) {<br/>            alert(&quot;✅ সফলভাবে মনোনয়ন জমা হয়েছে!&quot;);<br/>            document.getElementById(&#39;nominationForm&#39;).reset();<br/>        } else {<br/>            alert(&quot;❌ সমস্যা হয়েছে: &quot; + (result.error || &quot;জমা হয়নি&quot;));<br/>        }<br/>    } catch (error) {<br/>        alert(&quot;❌ সার্ভারে কানেক্ট করা যাচ্ছে না!&quot;);<br/>    }<br/>});<br/>&lt;/script&gt;</body>
 </html>
