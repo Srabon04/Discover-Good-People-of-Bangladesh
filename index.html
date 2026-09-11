@@ -14,3 +14,30 @@ for(const d of ds){district.insertAdjacentHTML("beforeend",`<option>${d}</option
 async function load(){const u="/api/search?q="+encodeURIComponent(q.value)+"&district="+encodeURIComponent(district.value);const a=await fetch(u).then(r=>r.json());results.innerHTML=a.map(x=>`<article class="card"><span class="badge">VERIFIED</span><h3>${x.name}</h3><p>${x.district} · ${x.category}</p><b>${x.statement}</b><p>${x.description}</p></article>`).join("")||"<p>কোনো verified profile পাওয়া যায়নি।</p>"}q.oninput=load;district.onchange=load;load();
 form.onsubmit=async e=>{e.preventDefault();msg.textContent="Submitting...";const r=await fetch("/api/nominate",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(form)))});const j=await r.json();msg.textContent=j.message||j.error;if(r.ok)form.reset()}
 </script></body></html>
+// D1 ডাটাবেজ থেকে লাইভ নমিনেশন লোড করার কোড
+async function loadNominations() {
+  try {
+    const res = await fetch('/api/nominations');
+    const data = await res.json();
+    
+    const container = document.getElementById('featured-people-container');
+    if (container && data.results) {
+      container.innerHTML = ''; // আগের স্ট্যাটিক ডাটা ক্লিয়ার করা
+      
+      data.results.forEach(item => {
+        container.innerHTML += `
+          <div class="card">
+            <h3>${item.name}</h3>
+            <p><strong>ক্যাটাগরি:</strong> ${item.category}</p>
+            <p><strong>জেলা:</strong> ${item.district}</p>
+            <p>${item.description}</p>
+          </div>
+        `;
+      });
+    }
+  } catch (err) {
+    console.error("ডাটা লোড করতে সমস্যা হয়েছে:", err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadNominations);
