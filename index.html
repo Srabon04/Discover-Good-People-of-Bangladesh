@@ -166,118 +166,49 @@
         <button type="submit" id="subBtn">জমা দিন</button>
       </form>
     </div>
+<!-- index.html ফাইলের একদম নিচে </body> ট্যাগের ঠিক আগে এভাবে লিখুন -->
 
-  </div>
+<script>
+  async function loadLiveNominations() {
+    try {
+      const res = await fetch('/api/nominations');
+      const data = await res.json();
+      
+      if (data && data.results) {
+        const countEl = document.getElementById('total-count');
+        if (countEl) countEl.innerText = data.results.length;
 
-  <script>
-    // ১. ডাটাবেজ থেকে ডাটা টেনে আনার ফাংশন
-    async function fetchLiveNominations() {
-      const container = document.getElementById('live-data-container');
-      const totalCount = document.getElementById('total-count');
-
-      try {
-        const response = await fetch('/api/nominations');
-        const data = await response.json();
-
-        if (data && data.results && data.results.length > 0) {
-          totalCount.innerText = data.results.length;
+        const container = document.getElementById('featured-people-container');
+        if (container) {
           container.innerHTML = '';
-
           data.results.forEach(item => {
             container.innerHTML += `
               <div class="card">
-                <span class="badge">${item.category || 'সাধারণ'}</span>
                 <h3>${item.name}</h3>
-                <p>📍 <strong>জেলা:</strong> ${item.district}</p>
+                <p><strong>ক্যাটাগরি:</strong> ${item.category}</p>
+                <p><strong>জেলা:</strong> ${item.district}</p>
                 <p>${item.description}</p>
-                <div class="nominator">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</div>
               </div>
-              
             `;
           });
-        } else {
-          container.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">এখনও কোনো তথ্য জমা পড়েনি।</p>';
         }
-      } catch (error) {
-        console.error('ডাটা লোড করতে সমস্যা:', error);
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">ডাটাবেজ কানেক্ট করা যায়নি।</p>';
       }
+    } catch (err) {
+      console.error("ডাটা লোড হতে সমস্যা হয়েছে:", err);
     }
-
-    // ২. ফর্ম সাবমিট করার ফাংশন
-    document.getElementById('nominationForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('subBtn');
-      btn.disabled = true;
-      btn.innerText = 'জমা হচ্ছে...';
-
-      const payload = {
-        name: document.getElementById('name').value,
-        category: document.getElementById('category').value,
-        district: document.getElementById('district').value,
-        description: document.getElementById('description').value,
-        nominator_name: document.getElementById('nominator_name').value
-      };
-
-      try {
-        const res = await fetch('/api/nominate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          alert('ধন্যবাদ! আপনার মনোনয়ন সফলভাবে জমা হয়েছে।');
-          document.getElementById('nominationForm').reset();
-          fetchLiveNominations(); // সাথে সাথে লাইভ লিস্ট আপডেট হবে
-        } else {
-          alert('সমস্যা হয়েছে, আবার চেষ্টা করুন।');
-        }
-      } catch (err) {
-        alert('নেটওয়ার্ক এরর!');
-      } finally {
-        btn.disabled = false;
-        btn.innerText = 'জমা দিন';
-      }
-    });
-
-    // পেজ ওপেন হলেই ডাটা ফেচ হবে
-    document.addEventListener('DOMContentLoaded', fetchLiveNominations);
-  </script>
-</body>
-  
-</html>
-
-async function loadLiveNominations() {
-  try {
-    const res = await fetch('/api/nominations');
-    const data = await res.json();
-    
-    if (data && data.results) {
-      // মূল ডিজাইনের কাউন্টার আপডেট
-      const countEl = document.getElementById('total-count');
-      if (countEl) countEl.innerText = data.results.length;
-
-      // মূল ডিজাইনের ডাটা কার্ড কন্টেইনার
-      const container = document.getElementById('featured-people-container');
-      if (container) {
-        container.innerHTML = '';
-        data.results.forEach(item => {
-          container.innerHTML += `
-            <div class="card">
-              <h3>${item.name}</h3>
-              <p><strong>ক্যাটাগরি:</strong> ${item.category}</p>
-              <p><strong>জেলা:</strong> ${item.district}</p>
-              <p>${item.description}</p>
-            </div>
-          `;
-        });
-      }
-    }
-  } catch (err) {
-    console.error("ডাটা লোড হতে সমস্যা হয়েছে:", err);
   }
-}
+
+  document.addEventListener('DOMContentLoaded', loadLiveNominations);
+</script>
+
+</body>
+</html>
+  </div>
+
+  <script>
+   
+  
+
 
 document.addEventListener('DOMContentLoaded', loadLiveNominations);
 
