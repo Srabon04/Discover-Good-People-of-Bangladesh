@@ -4,3 +4,4 @@
 </style>
 <body>&lt;script&gt;<br/>async function loadLiveNominations() {<br/>    try {<br/>        const response = await fetch(&#39;/api/nominations&#39;);<br/>        const data = await response.json();<br/>        <br/>        console.log(&quot;লাইভ জমা হওয়া ডাটা:&quot;, data);<br/>        // এখানে আপনার HTML কার্ড বা টেবিল ডিজাইন অনুসারে data লুপ করে বসিয়ে দিন<br/>    } catch (error) {<br/>        console.error(&quot;ডাটা লোড করতে সমস্যা হয়েছে:&quot;, error);<br/>    }<br/>}<br/><br/>window.addEventListener(&#39;DOMContentLoaded&#39;, loadLiveNominations);<br/>&lt;/script&gt;</body>
 </html>
+
