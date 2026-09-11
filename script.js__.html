@@ -7,4 +7,42 @@
 fetch('https://super-grass-8f6f.hossain-monir3474.workers.dev/api/nominate', {
   method: 'POST',
   body: JSON.stringify(formData)
-});
+});// ১. ডাটাবেজ থেকে লাইভ নমিনেশন ও কাউন্ট নিয়ে আসার ফাংশন
+async function loadLiveNominations() {
+  try {
+    const response = await fetch('/api/nominations'); // অথবা আপনার Worker API URL
+    const data = await response.json();
+
+    if (data && data.results) {
+      // মোট সংখ্যা বা কাউন্টার আপডেট (যেমন: 64, 100+ ইত্যাদি)
+      const totalCountElement = document.getElementById('total-nominations-count');
+      if (totalCountElement) {
+        totalCountElement.innerText = data.results.length;
+      }
+
+      // কার্ড লিস্ট রেন্ডার করা (যেমন: নরসিংদী থেকে আসা তথ্য)
+      const container = document.getElementById('featured-people-container');
+      if (container) {
+        container.innerHTML = ''; // আগের স্ট্যাটিক ডাটা ক্লিয়ার করা
+
+        data.results.forEach(item => {
+          const cardHtml = `
+            <div class="card">
+              <h3>${item.name}</h3>
+              <p><strong>ক্যাটাগরি:</strong> ${item.category}</p>
+              <p><strong>জেলা:</strong> ${item.district}</p>
+              <p>${item.description}</p>
+            </div>
+          `;
+          container.innerHTML += cardHtml;
+        });
+      }
+    }
+  } catch (error) {
+    console.error('ডাটা লোড করতে সমস্যা হয়েছে:', error);
+  }
+}
+
+// পেজ লোড হলেই ফানশন কল হবে
+document.addEventListener('DOMContentLoaded', loadLiveNominations);
+
