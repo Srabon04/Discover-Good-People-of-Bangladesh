@@ -4,3 +4,7 @@
 </style>
 <body>// আপনার সক্রিয় Worker URL টি এখানে বসান<br/>const API_URL = &quot;https://super-grass-8f6f.hossain-monir3474.workers.dev&quot;;<br/><br/>// ডাটা পাঠানোর ফাংশন (Nomination Form Submit)<br/>async function submitNomination(data) {<br/>  try {<br/>    const response = await fetch(`${API_URL}/api/nominate`, {<br/>      method: &quot;POST&quot;,<br/>      headers: {<br/>        &quot;Content-Type&quot;: &quot;application/json&quot;<br/>      },<br/>      body: JSON.stringify(data)<br/>    });<br/>    const result = await response.json();<br/>    if (result.success) {<br/>      alert(&quot;মনোনয়ন সফলভাবে জমা হয়েছে!&quot;);<br/>    } else {<br/>      alert(&quot;ত্রুটি: &quot; + result.error);<br/>    }<br/>  } catch (error) {<br/>    console.error(&quot;Submission failed:&quot;, error);<br/>  }<br/>}<br/><br/>// ডাটা ওয়েবসাইটে দেখানোর ফাংশন (Fetch Data)<br/>async function loadNominations() {<br/>  try {<br/>    const response = await fetch(`${API_URL}/api/nominations`);<br/>    const data = await response.json();<br/>    console.log(&quot;Loaded Nominations:&quot;, data);<br/>    // ডাটা HTML-এ রেন্ডার করার কোড এখানে যুক্ত করুন<br/>  } catch (error) {<br/>    console.error(&quot;Failed to load nominations:&quot;, error);<br/>  }<br/>}</body>
 </html>
+fetch('https://super-grass-8f6f.hossain-monir3474.workers.dev/api/nominate', {
+  method: 'POST',
+  body: JSON.stringify(formData)
+});
