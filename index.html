@@ -211,4 +211,44 @@
 
 
 document.addEventListener('DOMContentLoaded', loadLiveNominations);
+<script>
+  async function loadLiveNominations() {
+    try {
+      const res = await fetch('/api/nominations');
+      const data = await res.json();
+      
+      if (data && data.results) {
+        // ১. কাউন্টার আপডেট
+        const countEl = document.getElementById('total-count');
+        if (countEl) countEl.innerText = data.results.length;
 
+        // ২. ডাটা কার্ড দেখানোর ব্যবস্থা (সব আইডি চেক করে রেন্ডার করবে)
+        const container = document.getElementById('live-data-container') || 
+                          document.getElementById('featured-people-container');
+                          
+        if (container) {
+          if (data.results.length === 0) {
+            container.innerHTML = '<p style="text-align:center; grid-column: 1/-1;">এখনও কোনো তথ্য জমা পড়েনি।</p>';
+          } else {
+            container.innerHTML = '';
+            data.results.forEach(item => {
+              container.innerHTML += `
+                <div class="card" style="background:#fff; padding:15px; margin:10px; border-radius:8px; border-left:4px solid #006a4e;">
+                  <span style="background:#e8f5e9; color:#006a4e; padding:2px 6px; border-radius:4px; font-size:12px; font-weight:bold;">${item.category || 'সাধারণ'}</span>
+                  <h3 style="margin:8px 0 5px 0;">${item.name}</h3>
+                  <p style="margin:3px 0;">📍 <strong>জেলা:</strong> ${item.district}</p>
+                  <p style="margin:5px 0; color:#555;">${item.description}</p>
+                  <small style="color:#888;">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</small>
+                </div>
+              `;
+            });
+          }
+        }
+      }
+    } catch (err) {
+      console.error("ডাটা লোড হতে সমস্যা হয়েছে:", err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', loadLiveNominations);
+</script>
