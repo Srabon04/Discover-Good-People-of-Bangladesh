@@ -1,1 +1,14 @@
 name = &quot;your-project-name&quot;<br/>pages_build_output_dir = &quot;.&quot;<br/><br/>[[d1_databases]]<br/>binding = &quot;DB&quot;<br/>database_name = &quot;your-d1-db-name&quot;<br/>database_id = &quot;your-d1-database-id&quot;
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "royal-band-6f09",
+  "main": "index.js",
+  "compatibility_date": "2026-09-05",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "good_people_db",
+      "database_id": "YOUR_D1_DATABASE_ID"
+    }
+  ]
+}
