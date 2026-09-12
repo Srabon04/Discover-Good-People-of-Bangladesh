@@ -1,0 +1,323 @@
+/* =========================================================
+   DISCOVER GOOD PEOPLE OF BANGLADESH
+   Nomination Form Script (nominate.js)
+   ========================================================= */
+
+(() => {
+  "use strict";
+
+  // ⚠️ এখানে আপনার Google Apps Script Web App URL টি বসাবেন
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+
+  const $ = (selector, parent = document) => parent.querySelector(selector);
+
+  /* ---------- Districts List ---------- */
+  const districts = [
+    "Select District", "Bagerhat", "Bandarban", "Barguna", "Barishal", "Bhola", 
+    "Bogura", "Brahmanbaria", "Chandpur", "Chattogram", "Chuadanga", "Cox's Bazar", 
+    "Cumilla", "Dhaka", "Dinajpur", "Faridpur", "Feni", "Gaibandha", "Gazipur", 
+    "Gopalganj", "Habiganj", "Jamalpur", "Jashore", "Jhalokathi", "Jhenaidah", 
+    "Joypurhat", "Khagrachhari", "Khulna", "Kishoreganj", "Kurigram", "Kushtia", 
+    "Lakshmipur", "Lalmonirhat", "Madaripur", "Magura", "Manikganj", "Meherpur", 
+    "Moulvibazar", "Munshiganj", "Mymensingh", "Naogaon", "Narail", "Narayanganj", 
+    "Narsingdi", "Natore", "Netrokona", "Nilphamari", "Noakhali", "Pabna", 
+    "Panchagarh", "Patuakhali", "Pirojpur", "Rajbari", "Rajshahi", "Rangamati", 
+    "Rangpur", "Satkhira", "Shariatpur", "Sherpur", "Sirajganj", "Sunamganj", 
+    "Sylhet", "Tangail", "Thakurgaon"
+  ];
+
+  /* ---------- Categories List ---------- */
+  const categories = [
+    "Select Category", "Education", "Health", "Environment", "Social Service", 
+    "Women Empowerment", "Youth Development", "Poverty Reduction", 
+    "Humanitarian Work", "Disability Support", "Community Development", 
+    "Science & Technology", "Culture & Arts", "Other"
+  ];
+
+  /* ---------- Security Helper ---------- */
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char];
+    });
+  }
+
+  /* ---------- Modern CSS Injection ---------- */
+  function addCSS() {
+    if ($("#dgp-nominate-style")) return;
+
+    const style = document.createElement("style");
+    style.id = "dgp-nominate-style";
+    style.textContent = `
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+      * { box-sizing: border-box; transition: all 0.2s ease-in-out; }
+      body { 
+        margin: 0; 
+        font-family: 'Plus Jakarta Sans', Arial, sans-serif; 
+        color: #1a332a; 
+        background: #f4f8f6;
+        line-height: 1.6;
+      }
+      a { text-decoration: none; color: inherit; }
+
+      .dgp-top { 
+        background: #04442c; 
+        color: #d1fae5; 
+        font-size: 13px; 
+        padding: 9px 6%; 
+        display: flex; 
+        justify-content: space-between;
+        font-weight: 500;
+      }
+
+      .dgp-nav { 
+        height: 82px; 
+        background: rgba(255, 255, 255, 0.95); 
+        backdrop-filter: blur(10px);
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 0 6%; 
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); 
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .dgp-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; color: #065f46; }
+      .dgp-logo { 
+        width: 44px; 
+        height: 44px; 
+        border-radius: 14px; 
+        background: linear-gradient(135deg, #059669, #dc2626); 
+        display: grid; 
+        place-items: center; 
+        color: white; 
+        font-size: 22px; 
+      }
+      .dgp-brand small { display: block; font-size: 9px; color: #6b7280; font-weight: 500; margin-top: 2px; }
+      
+      .dgp-btn-outline { 
+        border: 2px solid #059669; 
+        color: #059669; 
+        padding: 9px 18px; 
+        border-radius: 10px; 
+        font-weight: 700; 
+        font-size: 13px; 
+      }
+      .dgp-btn-outline:hover { background: #059669; color: #fff; }
+
+      /* Form Box */
+      .dgp-wrapper { max-width: 780px; margin: 40px auto; padding: 0 20px; }
+      .dgp-card-box { 
+        background: #ffffff; 
+        border: 1px solid #e5e7eb; 
+        border-radius: 20px; 
+        padding: 40px; 
+        box-shadow: 0 10px 30px rgba(6, 78, 59, 0.05); 
+      }
+      .dgp-eyebrow { font-size: 11px; font-weight: 800; color: #059669; letter-spacing: 2px; text-transform: uppercase; }
+      .dgp-card-box h1 { font-size: 30px; margin: 6px 0 8px; color: #064e3b; font-weight: 800; }
+      .dgp-card-box p.sub { color: #6b7280; font-size: 14px; margin: 0 0 30px; }
+
+      .dgp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      .dgp-full { grid-column: 1 / -1; }
+      
+      .dgp-field { display: flex; flex-direction: column; gap: 6px; }
+      .dgp-field label { font-size: 13px; font-weight: 700; color: #1f2937; }
+      .dgp-field input, .dgp-field select, .dgp-field textarea { 
+        border: 1px solid #d1d5db; 
+        border-radius: 10px; 
+        padding: 13px 15px; 
+        font-size: 14px; 
+        background: #f9fafb; 
+        outline: none; 
+        font-family: inherit;
+        color: #1f2937;
+      }
+      .dgp-field input:focus, .dgp-field select:focus, .dgp-field textarea:focus { 
+        border-color: #059669; 
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); 
+      }
+
+      .dgp-submit-btn { 
+        background: linear-gradient(135deg, #059669, #047857); 
+        color: #fff; 
+        padding: 15px; 
+        border-radius: 10px; 
+        font-weight: 700; 
+        border: 0; 
+        cursor: pointer; 
+        width: 100%; 
+        font-size: 16px; 
+        margin-top: 10px;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+      }
+      .dgp-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4); }
+      .dgp-submit-btn:disabled { background: #9ca3af; cursor: not-allowed; transform: none; box-shadow: none; }
+
+      .dgp-footer { background: #032e1e; color: #a7f3d0; text-align: center; padding: 24px 20px; font-size: 12px; margin-top: 60px; }
+
+      @media (max-width: 650px) {
+        .dgp-grid { grid-template-columns: 1fr; }
+        .dgp-card-box { padding: 24px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  /* ---------- HTML Template Render ---------- */
+  function render() {
+    document.title = "Nominate - Discover Good People of Bangladesh";
+    document.body.innerHTML = `
+      <div class="dgp-top">
+        <span>🇧🇩 ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই</span>
+        <span>Discover • Inspire • Celebrate</span>
+      </div>
+
+      <header class="dgp-nav">
+        <a href="index.html" class="dgp-brand">
+          <div class="dgp-logo">♥</div>
+          <div>Discover Good People of Bangladesh<small>Celebrating people who make Bangladesh better</small></div>
+        </a>
+        <a class="dgp-btn-outline" href="index.html">← Back to Home</a>
+      </header>
+
+      <main class="dgp-wrapper">
+        <div class="dgp-card-box">
+          <div class="dgp-eyebrow">SUBMIT A NOMINATION</div>
+          <h1>Nominate a Hero</h1>
+          <p class="sub">আপনার পরিচিত কোনো ভালো মানুষ বা উদ্যোগকে দেশবাসীর সামনে তুলে ধরুন।</p>
+
+          <form id="nominationForm">
+            <div class="dgp-grid">
+              
+              <div class="dgp-field">
+                <label>মনোনয়নের ধরণ *</label>
+                <select name="nominee_type" required>
+                  <option value="">মনোনয়নের ধরণ নির্বাচন করুন</option>
+                  <option value="Person">ব্যক্তি (Good Person)</option>
+                  <option value="Organization">সংগঠন (Organization)</option>
+                  <option value="Project">প্রজেক্ট/উদ্যোগ (Project)</option>
+                </select>
+              </div>
+
+              <div class="dgp-field">
+                <label>নাম / সংগঠনের নাম *</label>
+                <input type="text" name="name" required placeholder="উদা: রহিম উদ্দিন বা আলোর পথ ফাউন্ডেশন">
+              </div>
+
+              <div class="dgp-field">
+                <label>জেলা *</label>
+                <select name="district" required>
+                  ${districts.map(d => `<option value="${d === "Select District" ? "" : escapeHTML(d)}">${escapeHTML(d)}</option>`).join("")}
+                </select>
+              </div>
+
+              <div class="dgp-field">
+                <label>ক্যাটাগরি *</label>
+                <select name="category" required>
+                  ${categories.map(c => `<option value="${c === "Select Category" ? "" : escapeHTML(c)}">${escapeHTML(c)}</option>`).join("")}
+                </select>
+              </div>
+
+              <div class="dgp-field dgp-full">
+                <label>মনোনয়ন দেওয়ার কারণ (সংক্ষেপে)</label>
+                <input type="text" name="reason" placeholder="কেন তাকে মনোনয়ন দিচ্ছেন?">
+              </div>
+
+              <div class="dgp-field dgp-full">
+                <label>ভাল কাজের বিবরণ/গল্প</label>
+                <textarea name="story" rows="4" placeholder="তার ভালো কাজ ও সমাজে এর প্রভাব সম্পর্কে বিস্তারিত লিখুন..."></textarea>
+              </div>
+
+              <div class="dgp-field dgp-full">
+                <label>আপনার নাম (মনোনয়নকারী)</label>
+                <input type="text" name="nominator_name" placeholder="আপনার নাম লিখুন">
+              </div>
+
+              <div class="dgp-full">
+                <button type="submit" class="dgp-submit-btn" id="submitBtn">👤 Submit Nomination</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </main>
+
+      <footer class="dgp-footer">
+        © 2026 Discover Good People of Bangladesh — ভালো কাজকে স্বীকৃতি, ভালো কাজকে অনুসরণযোগ্য।
+      </footer>
+    `;
+  }
+
+  /* ---------- Form Handler (Form Submit) ---------- */
+  function setupFormEvent() {
+    const form = $("#nominationForm");
+    const submitBtn = $("#submitBtn");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      const data = {
+        nominee_type: formData.get("nominee_type") || "",
+        name: formData.get("name") || "",
+        district: formData.get("district") || "",
+        category: formData.get("category") || "",
+        reason: formData.get("reason") || "",
+        story: formData.get("story") || "",
+        nominator_name: formData.get("nominator_name") || ""
+      };
+
+      // Validation
+      if (!data.nominee_type || !data.name || !data.district || !data.category) {
+        alert("দয়া করে প্রয়োজনীয় তথ্যগুলো (ধরণ, নাম, জেলা ও ক্যাটাগরি) পূরণ করুন।");
+        return;
+      }
+
+      // UI Loader
+      submitBtn.disabled = true;
+      submitBtn.textContent = "জমা দেওয়া হচ্ছে...";
+
+      try {
+        const response = await fetch(GOOGLE_SHEET_URL, {
+          method: "POST",
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success || result.status === "success") {
+          alert("✅ মনোনয়ন সফলভাবে জমা হয়েছে!");
+          form.reset();
+        } else {
+          alert("❌ ডাটা জমা হয়নি। আবার চেষ্টা করুন।");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("❌ সার্ভারের সাথে সংযোগ করা যাচ্ছে না। App URL ঠিক আছে কিনা পরীক্ষা করুন।");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "👤 Submit Nomination";
+      }
+    });
+  }
+
+  /* ---------- App Initialize ---------- */
+  document.addEventListener("DOMContentLoaded", () => {
+    addCSS();
+    render();
+    setupFormEvent();
+  });
+
+})();
