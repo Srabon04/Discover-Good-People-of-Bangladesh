@@ -5,129 +5,273 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Discover Good People of Bangladesh</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; color: #333; }
-    .header { text-align: center; background: #006a4e; color: white; padding: 20px; border-radius: 8px; }
-    .stats { display: flex; justify-content: space-around; margin: 20px 0; background: white; padding: 15px; border-radius: 8px; }
-    .card { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 5px solid #006a4e; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .badge { background: #e8f5e9; color: #006a4e; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px; }
-    form { background: white; padding: 20px; border-radius: 8px; margin-top: 20px; }
-    input, textarea { width: 100%; padding: 10px; margin: 8px 0 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-    button { background: #006a4e; color: white; border: none; padding: 12px 20px; width: 100%; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+    :root {
+      --primary-color: #006a4e;
+      --secondary-color: #f4f7f6;
+      --card-bg: #ffffff;
+      --text-color: #2c3e50;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* মূল হেডার ডিজাইন */
+    header {
+      background: linear-gradient(135deg, #006a4e 0%, #004d38 100%);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      margin: 0 0 10px 0;
+      font-size: 32px;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      margin: 0;
+      opacity: 0.95;
+      font-size: 16px;
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    /* কাউন্টার স্ট্যাটস */
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 35px;
+    }
+
+    .stat-box {
+      text-align: center;
+    }
+
+    .stat-box h2 {
+      margin: 0;
+      color: var(--primary-color);
+      font-size: 36px;
+    }
+
+    .stat-box p {
+      margin: 5px 0 0 0;
+      color: #666;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      font-size: 22px;
+      color: var(--primary-color);
+      display: inline-block;
+    }
+
+    /* কার্ড গ্রিড ও প্রফেশনাল ডিজাইন */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      border-left: 5px solid var(--primary-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .category-badge {
+      background-color: #e8f5e9;
+      color: var(--primary-color);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .district-tag {
+      font-size: 13px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .card h3 {
+      margin: 10px 0 8px 0;
+      font-size: 19px;
+      color: #1a1a1a;
+    }
+
+    .card p {
+      margin: 0 0 15px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #555;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      border-top: 1px solid #f0f0f0;
+      padding-top: 12px;
+      font-size: 12px;
+      color: #888;
+    }
+
+    .nominate-btn-wrapper {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn-nominate {
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 15px;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(0,106,78,0.3);
+      transition: background 0.2s;
+    }
+
+    .btn-nominate:hover {
+      background-color: #004d38;
+    }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h2>Discover Good People of Bangladesh</h2>
-    <p>ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই</p>
+  <!-- অরিজিনাল সুন্দর হেডার -->
+  <header>
+    <h1>Discover Good People of Bangladesh</h1>
+    <p>জ্ঞান ছড়িয়ে নতুন বানাই, জ্ঞান কাজকে এগিয়ে নিই</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- পরিসংখ্যান -->
+    <div class="stats-container">
+      <div class="stat-box">
+        <h2 id="total-count">০</h2>
+        <p>মোট মনোনয়ন</p>
+      </div>
+      <div class="stat-box">
+        <h2>৬৪</h2>
+        <p>কভারড জেলা</p>
+      </div>
+    </div>
+
+    <!-- লাইভ ডাটা সেকশন -->
+    <h2 class="section-title">Verified Good People (লাইভ ডাটা)</h2>
+    <div id="live-data-container" class="grid-container">
+      <p style="text-align:center; grid-column: 1/-1; padding: 30px;">ডাটা লোড হচ্ছে...</p>
+    </div>
+
+    <!-- ফর্মে যাওয়ার বাটন -->
+    <div class="nominate-btn-wrapper">
+      <a href="nominate.html" class="btn-nominate">+ একজন ভালো মানুষকে মনোনয়ন দিন</a>
+    </div>
+
   </div>
-
-  <div class="stats">
-    <div><h3 id="total-count">০</h3><p>মোট মনোনয়ন</p></div>
-    <div><h3>৬৪</h3><p>কভারড জেলা</p></div>
-  </div>
-
-  <h3>Verified Good People (লাইভ ডাটা)</h3>
-  <div id="live-data-container">
-    <p style="text-align:center;">ডাটা লোড হচ্ছে...</p>
-  </div>
-
-  <hr>
-
-  <h3>একজন ভালো মানুষকে মনোনয়ন দিন</h3>
-  <form id="nomination-form">
-    <label>মনোনীত ব্যক্তির নাম:</label>
-    <input type="text" id="name" placeholder="নাম লিখুন" required>
-
-    <label>ক্যাটাগরি:</label>
-    <input type="text" id="category" placeholder="যেমন: শিক্ষা, সমাজসেবা, স্বাস্থ্য" required>
-
-    <label>জেলা:</label>
-    <input type="text" id="district" placeholder="জেলার নাম" required>
-
-    <label>ভালো কাজের বিবরণ:</label>
-    <textarea id="description" rows="4" placeholder="তার উদ্যোগ ও কাজের বিবরণ লিখুন" required></textarea>
-
-    <label>আপনার নাম (মনোনয়নকারী):</label>
-    <input type="text" id="nominator_name" placeholder="আপনার নাম" required>
-
-    <button type="submit">জমা দিন</button>
-  </form>
 
   <script>
-  // আপনার Apps Script / Worker এর URL (এটা অবশ্যই থাকবে)
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzXZNBOzD_eQymyhMjqMbwvAILEel5tJSHa-OXo0bZ_8S8pzbPjuSLWuFSwirogj9GR/exec";
+    // আপনার গুগল অ্যাপস স্ক্রিপ্টের URL (এখানে পেস্ট করুন)
+    const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_EXEC_ID/exec"; 
 
-  // ১. লাইভ ডাটা লোড করার ফাংশন
-  async function loadLiveNominations() {
-    const container = document.getElementById('live-data-container') || document.getElementById('featured-people-container');
-    const countEl = document.getElementById('total-count');
+    // পেশা বা ক্যাটাগরি অনুযায়ী আইকন ম্যাচ করার ফাংশন
+    function getCategoryIcon(cat) {
+      if (!cat) return "👤";
+      const text = cat.toLowerCase();
+      if (text.includes("শিক্ষা") || text.includes("শিক্ষক")) return "🎓";
+      if (text.includes("স্বাস্থ্য") || text.includes("ডাক্তার") || text.includes("চিকিৎসা")) return "🩺";
+      if (text.includes("সমাজ") || text.includes("সেবা")) return "🤝";
+      if (text.includes("কৃষি") || text.includes("কৃষক")) return "🌾";
+      if (text.includes("প্রযুক্তি") || text.includes("আইটি")) return "💻";
+      if (text.includes("পরিবেশ") || text.includes("গাছ")) return "🌱";
+      return "🌟"; // ডিফল্ট আইকন
+    }
 
-    try {
-      const res = await fetch(SCRIPT_URL);
-      const data = await res.json();
-      
-      if (data && data.results && data.results.length > 0) {
-        if (countEl) countEl.innerText = data.results.length;
-        if (container) {
+    async function loadLiveNominations() {
+      const container = document.getElementById('live-data-container');
+      const countEl = document.getElementById('total-count');
+
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        
+        if (data && data.results && data.results.length > 0) {
+          if (countEl) countEl.innerText = data.results.length;
           container.innerHTML = '';
+          
           data.results.forEach(item => {
+            const icon = getCategoryIcon(item.category);
             container.innerHTML += `
-              <div class="card" style="background:#fff; padding:15px; margin:10px 0; border-radius:8px; border-left:4px solid #006a4e; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
-                <span class="badge" style="background:#e8f5e9; color:#006a4e; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">${item.category || 'সাধারণ'}</span>
-                <h3 style="margin:8px 0 5px 0;">${item.name}</h3>
-                <p style="margin:3px 0; font-size:14px;">📍 <strong>জেলা:</strong> ${item.district}</p>
-                <p style="margin:5px 0; color:#555; font-size:14px;">${item.description}</p>
-                <small style="color:#888;">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</small>
+              <div class="card">
+                <div>
+                  <div class="card-header">
+                    <span class="category-badge">${icon} ${item.category || 'সাধারণ'}</span>
+                    <span class="district-tag">📍 ${item.district || 'বাংলাদেশ'}</span>
+                  </div>
+                  <h3>${item.name}</h3>
+                  <p>${item.description}</p>
+                </div>
+                <div class="card-footer">
+                  <span>মনোনয়ন দিয়েছেন: <strong>${item.nominator_name || 'বেনামী'}</strong></span>
+                </div>
               </div>
             `;
           });
+        } else {
+          container.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 30px;">এখনও কোনো তথ্য জমা পড়েনি। প্রথম মনোনয়ন দিন!</p>';
         }
-      } else {
-        if (container) container.innerHTML = '<p style="text-align:center; padding:20px;">এখনও কোনো তথ্য জমা পড়েনি। প্রথম মনোনয়ন দিন!</p>';
+      } catch (err) {
+        container.innerHTML = '<p style="text-align:center; color:red; grid-column: 1/-1; padding: 30px;">ডাটা লোড করতে সমস্যা হয়েছে।</p>';
       }
-    } catch (err) {
-      if (container) container.innerHTML = '<p style="text-align:center; color:red; padding:20px;">ডাটা লোড হতে সমস্যা হয়েছে।</p>';
     }
-  }
 
-  // ২. ফরম জমা দেওয়ার ফাংশন (SCRIPT_URL এবং mode: 'no-cors' দুটোই আছে)
-  document.getElementById('nomination-form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const submitBtn = e.target.querySelector('button');
-    submitBtn.innerText = "জমা হচ্ছে...";
-    submitBtn.disabled = true;
-
-    const formData = {
-      name: document.getElementById('name').value,
-      category: document.getElementById('category').value,
-      district: document.getElementById('district').value,
-      description: document.getElementById('description').value,
-      nominator_name: document.getElementById('nominator_name').value
-    };
-
-    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // ব্রাউজারের ব্লক এড়াতে এটি যোগ করা হয়েছে
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      alert('ধন্যবাদ! আপনার মনোনয়ন সফলভাবে জমা হয়েছে।');
-      this.reset();
-      setTimeout(loadLiveNominations, 1500); // ১.৫ সেকেন্ড পর রিফ্রেশ হয়ে ডাটা দেখাবে
-    } catch (err) {
-      alert('সমস্যা হয়েছে, আবার চেষ্টা করুন।');
-    } finally {
-      submitBtn.innerText = "জমা দিন";
-      submitBtn.disabled = false;
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', loadLiveNominations);
-</script>
+    document.addEventListener('DOMContentLoaded', loadLiveNominations);
+  </script>
 
 </body>
 </html>
+
+ 
