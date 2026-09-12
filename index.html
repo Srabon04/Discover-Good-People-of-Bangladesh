@@ -55,67 +55,7 @@
   </form>
 
   <script>
-    const SCRIPT_URL = "https://weathered-leaf-479c.workers.dev";
-
-    // ১. লাইভ ডাটা লোড করা
-    async function loadLiveNominations() {
-      const container = document.getElementById('live-data-container');
-      const countEl = document.getElementById('total-count');
-
-      try {
-        const res = await fetch(SCRIPT_URL);
-        const data = await res.json();
-        
-        if (data && data.results && data.results.length > 0) {
-          if (countEl) countEl.innerText = data.results.length;
-          container.innerHTML = '';
-          data.results.forEach(item => {
-            container.innerHTML += `
-              <div class="card">
-                <span class="badge">${item.category || 'সাধারণ'}</span>
-                <h3 style="margin:8px 0 5px 0;">${item.name}</h3>
-                <p style="margin:3px 0; font-size:14px;">📍 <strong>জেলা:</strong> ${item.district}</p>
-                <p style="margin:5px 0; color:#555; font-size:14px;">${item.description}</p>
-                <small style="color:#888;">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</small>
-              </div>
-            `;
-          });
-        } else {
-          container.innerHTML = '<p style="text-align:center;">এখনও কোনো তথ্য জমা পড়েনি। প্রথম মনোনয়ন দিন!</p>';
-        }
-      } catch (err) {
-        container.innerHTML = '<p style="text-align:center; color:red;">ডাটা লোড হতে সমস্যা হয়েছে।</p>';
-      }
-    }
-
-    // ২. ফর্ম সাবমিট করা
-    document.getElementById('nomination-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const formData = {
-        name: document.getElementById('name').value,
-        category: document.getElementById('category').value,
-        district: document.getElementById('district').value,
-        description: document.getElementById('description').value,
-        nominator_name: document.getElementById('nominator_name').value
-      };
-
-      try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        
-        alert('ধন্যবাদ! আপনার মনোনয়ন জমা হয়েছে।');
-        this.reset();
-        loadLiveNominations();
-      } catch (err) {
-        alert('সমস্যা হয়েছে, আবার চেষ্টা করুন।');
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', loadLiveNominations);
+    
   </script>
 
 </body>
