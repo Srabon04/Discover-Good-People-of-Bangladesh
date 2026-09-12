@@ -4,10 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nominate - Discover Good People of Bangladesh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; transition: all 0.2s ease-in-out; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #1a332a; background: #f4f8f6; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        .top-bar { background: #04442c; color: #d1fae5; font-size: 13px; padding: 9px 6%; display: flex; justify-content: space-between; font-weight: 500; }
+
+        .navbar { height: 82px; background: rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 6%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); position: sticky; top: 0; z-index: 100; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; color: #065f46; }
+        .logo { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #059669, #dc2626); display: grid; place-items: center; color: white; font-size: 22px; }
+        .brand small { display: block; font-size: 9px; color: #6b7280; font-weight: 500; margin-top: 2px; }
+        
+        .btn-outline { border: 2px solid #059669; color: #059669; padding: 9px 18px; border-radius: 10px; font-weight: 700; font-size: 13px; }
+        .btn-outline:hover { background: #059669; color: #fff; }
+
+        .wrapper { max-width: 780px; margin: 40px auto; padding: 0 20px; }
+        .card-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(6, 78, 59, 0.05); }
+        .eyebrow { font-size: 11px; font-weight: 800; color: #059669; letter-spacing: 2px; text-transform: uppercase; }
+        .card-box h1 { font-size: 30px; margin: 6px 0 8px; color: #064e3b; font-weight: 800; }
+        .card-box p.sub { color: #6b7280; font-size: 14px; margin: 0 0 30px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .full { grid-column: 1 / -1; }
+        
+        .field { display: flex; flex-direction: column; gap: 6px; }
+        .field label { font-size: 13px; font-weight: 700; color: #1f2937; }
+        .field input, .field select, .field textarea { border: 1px solid #d1d5db; border-radius: 10px; padding: 13px 15px; font-size: 14px; background: #f9fafb; outline: none; font-family: inherit; color: #1f2937; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: #059669; background: #fff; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); }
+
+        .submit-btn { background: linear-gradient(135deg, #059669, #047857); color: #fff; padding: 15px; border-radius: 10px; font-weight: 700; border: 0; cursor: pointer; width: 100%; font-size: 16px; margin-top: 10px; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3); }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4); }
+        .submit-btn:disabled { background: #9ca3af; cursor: not-allowed; transform: none; }
+
+        .footer { background: #032e1e; color: #a7f3d0; text-align: center; padding: 24px 20px; font-size: 12px; margin-top: 60px; }
+
+        @media (max-width: 650px) { .grid { grid-template-columns: 1fr; } .card-box { padding: 24px; } }
+    </style>
 </head>
 <body>
 
-    <script src="nominate.js"></script>
+    <div class="top-bar">
+        <span>🇧🇩 ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই</span>
+        <span>Discover • Inspire • Celebrate</span>
+    </div>
 
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <div class="logo">♥</div>
+            <div>Discover Good People of Bangladesh<small>Celebrating people who make Bangladesh better</small></div>
+        </a>
+        <a class="btn-outline" href="index.html">← Back to Home</a>
+    </header>
+
+    <main class="wrapper">
+        <div class="card-box">
+            <div class="eyebrow">SUBMIT A NOMINATION</div>
+            <h1>Nominate a Hero</h1>
+            <p class="sub">আপনার পরিচিত কোনো ভালো মানুষ বা উদ্যোগকে দেশবাসীর সামনে তুলে ধরুন।</p>
+
+            <form id="nominationForm">
+                <div class="grid">
+                    
+                    <div class="field">
+                        <label>মনোনয়নের ধরণ *</label>
+                        <select name="nominee_type" required>
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="Person">ব্যক্তি (Good Person)</option>
+                            <option value="Organization">সংগঠন (Organization)</option>
+                            <option value="Project">প্রজেক্ট/উদ্যোগ (Project)</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>নাম / সংগঠনের নাম *</label>
+                        <input type="text" name="name" required placeholder="উদা: রহিম উদ্দিন বা আলোর পথ ফাউন্ডেশন">
+                    </div>
+
+                    <div class="field">
+                        <label>জেলা *</label>
+                        <select name="district" required>
+                            <option value="">জেলা নির্বাচন করুন</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Chattogram">Chattogram</option>
+                            <option value="Sylhet">Sylhet</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Khulna">Khulna</option>
+                            <option value="Barishal">Barishal</option>
+                            <option value="Rangpur">Rangpur</option>
+                            <option value="Mymensingh">Mymensingh</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>ক্যাটাগরি *</label>
+                        <select name="category" required>
+                            <option value="">ক্যাটাগরি নির্বাচন করুন</option>
+                            <option value="Education">Education</option>
+                            <option value="Health">Health</option>
+                            <option value="Social Service">Social Service</option>
+                            <option value="Environment">Environment</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label>মনোনয়ন দেওয়ার কারণ (সংক্ষেপে)</label>
+                        <input type="text" name="reason" placeholder="কেন তাকে মনোনয়ন দিচ্ছেন?">
+                    </div>
+
+                    <div class="field full">
+                        <label>ভাল কাজের বিবরণ/গল্প</label>
+                        <textarea name="story" rows="4" placeholder="তার ভালো কাজ ও সমাজে এর প্রভাব সম্পর্কে বিস্তারিত লিখুন..."></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label>আপনার নাম (মনোনয়নকারী)</label>
+                        <input type="text" name="nominator_name" placeholder="আপনার নাম লিখুন">
+                    </div>
+
+                    <div class="full">
+                        <button type="submit" class="submit-btn" id="submitBtn">👤 Submit Nomination</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 Discover Good People of Bangladesh — ভালো কাজকে স্বীকৃতি, ভালো কাজকে অনুসরণযোগ্য।
+    </footer>
+
+    <script>
+        // ⚠️ আপনার Google Apps Script URL-টি নিচে " " এর মাঝে বসাবেন
+        const GOOGLE_SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+
+        document.getElementById("nominationForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById("submitBtn");
+            const formData = new FormData(this);
+
+            const data = {
+                nominee_type: formData.get("nominee_type"),
+                name: formData.get("name"),
+                district: formData.get("district"),
+                category: formData.get("category"),
+                reason: formData.get("reason"),
+                story: formData.get("story"),
+                nominator_name: formData.get("nominator_name")
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "জমা দেওয়া হচ্ছে...";
+
+            try {
+                const response = await fetch(GOOGLE_SHEET_URL, {
+                    method: "POST",
+                    body: JSON.stringify(data)
+                });
+
+                alert("✅ মনোনয়ন সফলভাবে জমা হয়েছে!");
+                this.reset();
+            } catch (error) {
+                console.error(error);
+                alert("❌ সমস্যা হয়েছে! Google Apps Script URL ঠিক আছে কিনা চেক করুন।");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "👤 Submit Nomination";
+            }
+        });
+    </script>
 </body>
 </html>
