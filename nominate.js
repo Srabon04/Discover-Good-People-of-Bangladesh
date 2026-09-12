@@ -7,7 +7,7 @@
   "use strict";
 
   // ⚠️ এখানে আপনার Google Apps Script Web App URL টি বসাবেন
-  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
+  const GOOGLE_SHEET_URL = "";
 
   const $ = (selector, parent = document) => parent.querySelector(selector);
 
