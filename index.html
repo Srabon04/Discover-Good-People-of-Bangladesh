@@ -54,7 +54,80 @@
     <button type="submit">জমা দিন</button>
   </form>
 
-  
+  <script>
+  // আপনার Apps Script / Worker এর URL (এটা অবশ্যই থাকবে)
+  const SCRIPT_URL = "https://weathered-leaf-479c.workers.dev";
+
+  // ১. লাইভ ডাটা লোড করার ফাংশন
+  async function loadLiveNominations() {
+    const container = document.getElementById('live-data-container') || document.getElementById('featured-people-container');
+    const countEl = document.getElementById('total-count');
+
+    try {
+      const res = await fetch(SCRIPT_URL);
+      const data = await res.json();
+      
+      if (data && data.results && data.results.length > 0) {
+        if (countEl) countEl.innerText = data.results.length;
+        if (container) {
+          container.innerHTML = '';
+          data.results.forEach(item => {
+            container.innerHTML += `
+              <div class="card" style="background:#fff; padding:15px; margin:10px 0; border-radius:8px; border-left:4px solid #006a4e; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                <span class="badge" style="background:#e8f5e9; color:#006a4e; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">${item.category || 'সাধারণ'}</span>
+                <h3 style="margin:8px 0 5px 0;">${item.name}</h3>
+                <p style="margin:3px 0; font-size:14px;">📍 <strong>জেলা:</strong> ${item.district}</p>
+                <p style="margin:5px 0; color:#555; font-size:14px;">${item.description}</p>
+                <small style="color:#888;">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</small>
+              </div>
+            `;
+          });
+        }
+      } else {
+        if (container) container.innerHTML = '<p style="text-align:center; padding:20px;">এখনও কোনো তথ্য জমা পড়েনি। প্রথম মনোনয়ন দিন!</p>';
+      }
+    } catch (err) {
+      if (container) container.innerHTML = '<p style="text-align:center; color:red; padding:20px;">ডাটা লোড হতে সমস্যা হয়েছে।</p>';
+    }
+  }
+
+  // ২. ফরম জমা দেওয়ার ফাংশন (SCRIPT_URL এবং mode: 'no-cors' দুটোই আছে)
+  document.getElementById('nomination-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button');
+    submitBtn.innerText = "জমা হচ্ছে...";
+    submitBtn.disabled = true;
+
+    const formData = {
+      name: document.getElementById('name').value,
+      category: document.getElementById('category').value,
+      district: document.getElementById('district').value,
+      description: document.getElementById('description').value,
+      nominator_name: document.getElementById('nominator_name').value
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // ব্রাউজারের ব্লক এড়াতে এটি যোগ করা হয়েছে
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      alert('ধন্যবাদ! আপনার মনোনয়ন সফলভাবে জমা হয়েছে।');
+      this.reset();
+      setTimeout(loadLiveNominations, 1500); // ১.৫ সেকেন্ড পর রিফ্রেশ হয়ে ডাটা দেখাবে
+    } catch (err) {
+      alert('সমস্যা হয়েছে, আবার চেষ্টা করুন।');
+    } finally {
+      submitBtn.innerText = "জমা দিন";
+      submitBtn.disabled = false;
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', loadLiveNominations);
+</script>
 
 </body>
 </html>
