@@ -207,7 +207,38 @@
 
   <script>
    
-  
+  <script>
+  async function loadData() {
+    try {
+      const res = await fetch('https://weathered-leaf-479c.workers.dev');
+      const data = await res.json();
+      const container = document.getElementById('featured-people-container') || document.getElementById('live-data-container');
+      const countEl = document.getElementById('total-count');
+
+      if (data && data.results && data.results.length > 0) {
+        if (countEl) countEl.innerText = data.results.length;
+        if (container) {
+          container.innerHTML = '';
+          data.results.forEach(item => {
+            container.innerHTML += `
+              <div style="background:#fff; padding:15px; margin:10px 0; border-radius:8px; border-left:4px solid #006a4e;">
+                <span style="background:#e8f5e9; color:#006a4e; padding:2px 8px; border-radius:4px; font-weight:bold;">${item.category || 'সাধারণ'}</span>
+                <h3 style="margin:8px 0 5px 0;">${item.name}</h3>
+                <p>📍 <strong>জেলা:</strong> ${item.district}</p>
+                <p>${item.description}</p>
+                <small style="color:#888;">মনোনয়ন দিয়েছেন: ${item.nominator_name || 'বেনামী'}</small>
+              </div>`;
+          });
+        }
+      } else {
+        if (container) container.innerHTML = '<p style="text-align:center; padding:20px;">এখনও কোনো তথ্য জমা পড়েনি।</p>';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', loadData);
+</script>
 
 
 document.addEventListener('DOMContentLoaded', loadLiveNominations);
