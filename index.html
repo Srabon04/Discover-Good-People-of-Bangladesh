@@ -252,9 +252,6 @@ document.addEventListener('DOMContentLoaded', loadLiveNominations);
 
   document.addEventListener('DOMContentLoaded', loadLiveNominations);
 </script>
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
 
     // ১. D1 ডাটাবেজ থেকে ডাটা ফেচ করা
     if (url.pathname === "/api/nominations") {
