@@ -4,10 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discover Good People of Bangladesh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; transition: all 0.25s ease-in-out; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; color: #1a332a; background: #f4f8f6; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+
+        .top-bar { background: #04442c; color: #d1fae5; font-size: 13px; padding: 9px 6%; display: flex; justify-content: space-between; font-weight: 500; }
+        
+        .navbar { height: 82px; background: rgba(255, 255, 255, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 6%; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); position: sticky; top: 0; z-index: 100; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 20px; color: #065f46; }
+        .logo { width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, #059669, #dc2626); display: grid; place-items: center; color: white; font-size: 22px; }
+        .brand small { display: block; font-size: 9px; color: #6b7280; font-weight: 500; margin-top: 2px; }
+        
+        .btn-nominate { background: linear-gradient(135deg, #059669, #047857); color: #fff; padding: 12px 22px; border-radius: 10px; font-weight: 700; border: 0; cursor: pointer; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3); }
+        .btn-nominate:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4); }
+
+        .hero { display: flex; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at top, #e6f4ed 0%, #f4f8f6 100%); padding: 60px 20px 80px; }
+        .hero-content { max-width: 800px; }
+        .pill { display: inline-block; background: #ffffff; border: 1px solid #a7f3d0; color: #047857; border-radius: 30px; padding: 6px 16px; font-size: 11px; font-weight: 800; }
+        .hero h1 { font-size: 46px; line-height: 1.15; margin: 16px 0 12px; color: #064e3b; font-weight: 800; }
+        .hero h1 span { color: #e11d48; }
+        .hero p { font-size: 19px; color: #374151; font-weight: 500; }
+
+        .search-container { background: #ffffff; border-radius: 18px; padding: 16px; box-shadow: 0 12px 35px rgba(6, 78, 59, 0.08); display: grid; grid-template-columns: 1.8fr 1fr 1fr 120px; gap: 12px; max-width: 1050px; width: 90%; margin: -40px auto 50px; position: relative; z-index: 4; border: 1px solid #e5e7eb; }
+        .search-container input, .search-container select { border: 1px solid #d1d5db; border-radius: 10px; padding: 14px 16px; font-size: 14px; background: #f9fafb; outline: none; }
+
+        .content-section { max-width: 1150px; margin: 0 auto 60px; padding: 0 20px; }
+        .eyebrow { font-size: 11px; font-weight: 800; color: #059669; letter-spacing: 2px; text-transform: uppercase; }
+        .content-section h2 { font-size: 30px; margin: 6px 0 4px; color: #064e3b; font-weight: 800; }
+        .sub { color: #6b7280; margin: 0 0 28px; font-size: 14px; }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); display: flex; flex-direction: column; }
+        .card-img { height: 160px; background: #ecfdf5; display: grid; place-items: center; font-size: 48px; }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-body strong { font-size: 16px; color: #065f46; font-weight: 700; margin-bottom: 4px; }
+        .card-body small { color: #6b7280; margin-bottom: 12px; font-size: 12px; }
+        .card-body p { font-size: 13px; color: #4b5563; margin: 0 0 16px; line-height: 1.5; flex-grow: 1; }
+        .tag { background: #d1fae5; color: #065f46; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; width: fit-content; }
+        .loading { text-align: center; padding: 40px; color: #6b7280; grid-column: 1 / -1; font-weight: 600; }
+
+        .footer { background: #032e1e; color: #a7f3d0; text-align: center; padding: 28px 20px; font-size: 13px; margin-top: 60px; }
+
+        @media (max-width: 960px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .search-container { grid-template-columns: 1fr; margin-top: -20px; } .cards-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 32px; } }
+    </style>
 </head>
 <body>
 
-    <script src="script.js"></script>
+    <div class="top-bar">
+        <span>🇧🇩 ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই</span>
+        <span>Discover • Inspire • Celebrate</span>
+    </div>
 
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <div class="logo">♥</div>
+            <div>Discover Good People of Bangladesh<small>Celebrating people who make Bangladesh better</small></div>
+        </a>
+        <a href="nominate.html" class="btn-nominate">Nominate a Hero</a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="pill">🇧🇩 PEOPLE • PURPOSE • POSITIVE CHANGE</div>
+            <h1>Discover Good People<br><span>of Bangladesh</span></h1>
+            <p>ভালো কাজকে তুলে ধরি, ভালো কাজকে ছড়িয়ে দিই ❤️</p>
+        </div>
+    </section>
+
+    <form class="search-container" id="searchForm">
+        <input id="keyword" placeholder="Search good people, organizations...">
+        <select id="district">
+            <option value="">All 64 Districts</option>
+            <option value="Dhaka">Dhaka</option>
+            <option value="Chattogram">Chattogram</option>
+            <option value="Sylhet">Sylhet</option>
+            <option value="Rajshahi">Rajshahi</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Barishal">Barishal</option>
+            <option value="Rangpur">Rangpur</option>
+            <option value="Mymensingh">Mymensingh</option>
+        </select>
+        <select id="category">
+            <option value="">All Categories</option>
+            <option value="Education">Education</option>
+            <option value="Health">Health</option>
+            <option value="Social Service">Social Service</option>
+            <option value="Environment">Environment</option>
+        </select>
+        <button class="btn-nominate" type="submit">🔎 Search</button>
+    </form>
+
+    <section class="content-section">
+        <div class="eyebrow">FEATURED HEROES</div>
+        <h2>Recently Added Good People</h2>
+        <p class="sub">Real people. Real work. Real impact.</p>
+
+        <div id="cardsBox" class="cards-grid">
+            <div class="loading">Loading data from Google Sheet...</div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © 2026 Discover Good People of Bangladesh — ভালো কাজকে স্বীকৃতি, ভালো কাজকে অনুসরণযোগ্য।
+    </footer>
+
+    <script>
+        // ⚠️ আপনার Google Apps Script Web App URL-টি নিচে " " এর মাঝে বসাবেন
+        const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+
+        async function loadData() {
+            const box = document.getElementById("cardsBox");
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL") {
+                box.innerHTML = `<div class="loading">⚠️ অনুগ্রহ করে কোডে আপনার Google Apps Script URL টি বসিয়ে দিন।</div>`;
+                return;
+            }
+
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL);
+                const rows = await res.json();
+
+                if (!rows || rows.length === 0) {
+                    box.innerHTML = `<div class="loading">কোনো ডাটা পাওয়া যায়নি।</div>`;
+                    return;
+                }
+
+                box.innerHTML = rows.map(item => `
+                    <article class="card">
+                        <div class="card-img">❤️</div>
+                        <div class="card-body">
+                            <strong>${item.name || 'N/A'}</strong>
+                            <small>📍 ${item.district || 'N/A'}</small>
+                            <p>${item.description || item.reason || 'সমাজসেবামূলক কাজে অবদানের জন্য সম্মাননা।'}</p>
+                            <span class="tag">${item.category || 'General'}</span>
+                        </div>
+                    </article>
+                `).join("");
+            } catch (err) {
+                console.error(err);
+                box.innerHTML = `<div class="loading">ডাটা লোড করতে সমস্যা হয়েছে।</div>`;
+            }
+        }
+
+        document.getElementById("searchForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            loadData();
+        });
+
+        loadData();
+    </script>
 </body>
 </html>
