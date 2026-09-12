@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মনোনয়ন দিন - Discover Good People of Bangladesh</title>
+  <style>
+    :root {
+      --primary-color: #0b6645;
+      --accent-yellow: #f4be18;
+      --bg-color: #f6f8f7;
+    }
 
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background: var(--primary-color);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header a {
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      float: left;
+    }
+
+    .form-container {
+      max-width: 650px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .form-title {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-size: 22px;
+    }
+
+    .form-subtitle {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #084d34;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="index.html">← ড্যাশবোর্ডে ফিরে যান</a>
+    <h2 style="margin:0;">Discover Good People of Bangladesh</h2>
+  </div>
+
+  <div class="form-container">
+    <h3 class="form-title">📝 একজন ভালো মানুষকে মনোনয়ন দিন</h3>
+    <p class="form-subtitle">আপনার পরিচিত কোনো ব্যক্তি, সংগঠন বা ভালো উদ্যোগের কথা আমাদের জানান।</p>
+
+    <form id="nominationForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>নাম / উদ্যোগের নাম:</label>
+          <input type="text" id="name" placeholder="নাম লিখুন" required>
+        </div>
+
+        <div class="form-group">
+          <label>কাজের ধরন (ক্যাটাগরি):</label>
+          <input type="text" id="category" placeholder="শিক্ষা, স্বাস্থ্য, সমাজসেবা ইত্যাদি" required>
+        </div>
+
+        <div class="form-group">
+          <label>জেলা:</label>
+          <input type="text" id="district" placeholder="জেলার নাম" required>
+        </div>
+
+        <div class="form-group">
+          <label>আপনার নাম (মনোনয়নকারী):</label>
+          <input type="text" id="nominator_name" placeholder="আপনার নাম" required>
+        </div>
+
+        <div class="form-group full">
+          <label>কেন মনোনয়ন দিচ্ছেন / ভালো কাজের বিবরণ:</label>
+          <textarea id="description" rows="4" placeholder="তার উদ্যোগ ও ভালো কাজের বিস্তারিত বিবরণ লিখুন..." required></textarea>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">মনোনয়ন জমা দিন</button>
+    </form>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/YOUR_EXEC_ID/exec"; // আপনার কপি করা Apps Script URL
+
+    document.getElementById('nominationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('submitBtn');
+      btn.innerText = "জমা হচ্ছে...";
+      btn.disabled = true;
+
+      const formData = {
+        name: document.getElementById('name').value,
+        category: document.getElementById('category').value,
+        district: document.getElementById('district').value,
+        description: document.getElementById('description').value,
+        nominator_name: document.getElementById('nominator_name').value
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        alert('✅ ধন্যবাদ! সফলভাবে মনোনয়ন জমা হয়েছে।');
+        this.reset();
+        window.location.href = "index.html";
+      } catch (error) {
+        alert('❌ সার্ভারে কানেক্ট করা যাচ্ছে না!');
+      } finally {
+        btn.innerText = "মনোনয়ন জমা দিন";
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>
