@@ -137,8 +137,8 @@
         <!-- আপনার আগের লেখা প্যারাগ্রাফ -->
         <p>কৃষক, শিক্ষক, ডাক্তার কিংবা সাধারণ সমাজসেবক—আমাদের আশেপাশের ভালো মানুষদের গল্প...</p>
 
-        <!-- ⬇️ ঠিক এই জায়গায় নতুন কোডটুকু বসাবেন ⬇️ -->
-        <div class="profession-strip">
+        
+   <div class="profession-strip">
             <span class="badge">👨‍🏫 শিক্ষকতা</span>
             <span class="badge">🌾 কৃষি ও মেহনতি</span>
             <span class="badge">🩺 স্বাস্থ্যসেবা</span>
@@ -146,8 +146,22 @@
             <span class="badge">🌱 পরিবেশ রক্ষা</span>
         </div>
 
-    </div>
+   
+  </div>
+    /* ১. গ্রাম ও শহরের মিক্সড ছবি এবং ডার্ক ফিল্টার */
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=1600') center/cover no-repeat fixed !important;
+}
+
+/* ২. মূল ফর্ম কার্ডটি কিছুটা কাচের মতো ট্রান্সপারেন্ট করা */
+form, .form-container, div[class*="card"] {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
 </section>
+    
   </style>
 </head>
 <body>
