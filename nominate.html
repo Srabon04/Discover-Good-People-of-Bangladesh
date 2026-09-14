@@ -10,7 +10,6 @@
       --accent-yellow: #f4be18;
       --bg-color: #f6f8f7;
     }
-/* পেশাজীবীদের ফটো গ্যালারি ও ওভারলে স্টাইল */
         .professionals-showcase {
             display: flex;
             justify-content: center;
@@ -134,7 +133,7 @@
     <div class="hero-content">
         <h1>Discover Good People of Bangladesh</h1>
         
-        <!-- আপনার আগের লেখা প্যারাগ্রাফ -->
+        
         <p>কৃষক, শিক্ষক, ডাক্তার কিংবা সাধারণ সমাজসেবক—আমাদের আশেপাশের ভালো মানুষদের গল্প...</p>
 
         
@@ -148,13 +147,13 @@
 
    
   </div>
-    /* ১. গ্রাম ও শহরের মিক্সড ছবি এবং ডার্ক ফিল্টার */
+    
 body {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                 url('https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=1600') center/cover no-repeat fixed !important;
 }
 
-/* ২. মূল ফর্ম কার্ডটি কিছুটা কাচের মতো ট্রান্সপারেন্ট করা */
+
 form, .form-container, div[class*="card"] {
     background: rgba(255, 255, 255, 0.92) !important;
     backdrop-filter: blur(8px) !important;
@@ -245,31 +244,52 @@ form, .form-container, div[class*="card"] {
     });
   </script>
 
-</body><div style="background: rgba(255, 255, 255, 0.95); border: 2px dashed #006a4e; padding: 20px; border-radius: 12px; margin-top: 25px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+</body> <!-- দ্বিভাষিক (Bilingual) ডোনেশন সেকশন -->
+<div style="background: rgba(255, 255, 255, 0.95); border: 2px dashed #006a4e; padding: 20px; border-radius: 12px; margin-top: 25px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    
+    <!-- শিরোনাম: বাংলা ও ইংরেজি -->
+    <h3 style="color: #006a4e; margin-bottom: 6px; font-size: 1.2rem;">
+        ❤️ অনাহারী মানুষের জন্য এক থেকে দুই টাকা অনুদান দিন
+    </h3>
+    <h4 style="color: #e63946; margin-top: 0; margin-bottom: 12px; font-size: 1rem; font-weight: 600;">
+        Donate 1-2 BDT to Feed Hungry & Destitute People
+    </h4>
+
+    <!-- বিবরণ: বাংলা ও ইংরেজি -->
+    <p style="color: #444; font-size: 0.88rem; margin-bottom: 15px; line-height: 1.5;">
+        আপনার মাত্র ১ বা ২ টাকার ক্ষুদ্র অনুদানও অনাহারী মানুষের মুখে আহার তুলে দিতে পারে। দেশ বা বিদেশ থেকে সরাসরি সাহায্য পাঠান।<br>
+        <i style="color: #666;">Even a small contribution of 1 or 2 BDT/Currency can provide a meal to someone in need. Donate directly from home or abroad.</i>
+    </p>
+
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">
         
-        <h3 style="color: #006a4e; margin-bottom: 8px; font-size: 1.2rem;">❤️ অনাহারী মানুষের জন্য এক থেকে দুই টাকা অনুদান দিন</h3>
-        <p style="color: #444; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.4;">
-            আপনার মাত্র ১ বা ২ টাকার ক্ষুদ্র অনুদানও অনাহারী ও অসহায় মানুষের মুখে আহার তুলে দিতে পারে। দেশ বা বিদেশ থেকে সরাসরি সাহায্য পাঠান:
-        </p>
-
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
-            
-            <!-- বিকাশ (বাংলাদেশের জন্য) -->
-            <div style="background: #e2136e; color: white; padding: 12px 18px; border-radius: 8px; font-size: 0.9rem; min-width: 200px;">
-                <strong style="display: block; font-size: 1rem; margin-bottom: 4px;">🇧🇩 বিকাশ (Send Money)</strong>
-                <span>নম্বর: <strong>+08801979347454</strong></span><br>
-                <small>(পার্সোনাল)</small>
-            </div>
-
-            <!-- পায়োনিয়ার (আন্তর্জাতিক) -->
-            <div style="background: #ff4800; color: white; padding: 12px 18px; border-radius: 8px; font-size: 0.9rem; min-width: 200px;">
-                <strong style="display: block; font-size: 1rem; margin-bottom: 4px;">🌐 আন্তর্জাতিক অনুদান</strong>
-                <a href="আপনার_Payoneer_লিংক" target="_blank" style="color: white; font-weight: bold; text-decoration: underline;">
-                    Payoneer দিয়ে দান করুন
-                </a><br>
-                <small>(কার্ড / পেপ্যাল)</small>
-            </div>
-
+        <!-- ১. বিকাশ / নগদ (বাংলাদেশের জন্য / For Bangladesh) -->
+        <div style="background: #e2136e; color: white; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; min-width: 230px; text-align: center;">
+            <strong style="display: block; font-size: 1.05rem; margin-bottom: 2px;">🇧🇩 বিকাশ / নগদ (bKash / Nagad)</strong>
+            <div style="font-size: 0.8rem; font-weight: bold; background: rgba(0,0,0,0.15); padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">
+                বাংলাদেশের জন্য / For Bangladesh
+            </div><br>
+            <span style="font-size: 0.85rem; opacity: 0.95;">সেন্ড মানি / Send Money</span><br>
+            <span style="display: inline-block; margin-top: 6px; font-size: 0.95rem;">
+                নম্বর / No: <strong>+8801979347454</strong>
+            </span><br>
+            <small style="font-size: 0.75rem; opacity: 0.85;">(পার্সোনাল / Personal)</small>
         </div>
+
+        <!-- ২. পায়োনিয়ার (আন্তর্জাতিক / International Donation) -->
+        <div style="background: #ff4800; color: white; padding: 14px 18px; border-radius: 8px; font-size: 0.9rem; min-width: 230px; text-align: center;">
+            <strong style="display: block; font-size: 1.05rem; margin-bottom: 2px;">🌐 পায়োনিয়ার (Payoneer)</strong>
+            <div style="font-size: 0.8rem; font-weight: bold; background: rgba(0,0,0,0.15); padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">
+                আন্তর্জাতিক অনুদান / International Donation
+            </div><br>
+            <span style="font-size: 0.85rem; opacity: 0.95;">কার্ড বা অ্যাকাউন্ট / Cards & Payoneer</span><br>
+            <span style="display: inline-block; margin-top: 6px; font-size: 0.9rem;">
+                ইমেইল / Email: <strong>hossain.monir3474@gmail.com</strong>
+            </span><br>
+            <small style="font-size: 0.75rem; opacity: 0.85;">(পায়োনিয়ারে পাঠান / Send via Payoneer)</small>
+        </div>
+
     </div>
+</div>
+            
 </html>
